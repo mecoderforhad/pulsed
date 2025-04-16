@@ -1,11 +1,11 @@
-// src/Login.tsx
+// src/Register.tsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../provider/useAuth";
 import { useNavigate } from "react-router";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const auth = useAuth();
   const navigation = useNavigate();
   const [password, setPassword] = useState("");
@@ -55,12 +55,11 @@ const Login: React.FC = () => {
               </div>
             </div>
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
-              Welcome Back
+              Registration
             </h2>
             <p className="text-gray-500 text-center mb-8">
-              Sign in to your account
+              Create a new account
             </p>
-
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
                 <label
@@ -109,7 +108,26 @@ const Login: React.FC = () => {
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Password
+                  Input Password
+                </label>
+                <div className="rounded-lg shadow-md overflow-hidden border border-gray-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all duration-200">
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full px-3 py-2 focus:outline-none dark:text-slate-700"
+                    placeholder="••••••••"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Confirm Password
                 </label>
                 <div className="rounded-lg shadow-md overflow-hidden border border-gray-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all duration-200">
                   <input
@@ -136,17 +154,8 @@ const Login: React.FC = () => {
                     htmlFor="remember-me"
                     className="ml-2 block text-sm text-gray-700"
                   >
-                    Remember me
+                    I have read an agreement.
                   </label>
-                </div>
-
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-blue-500 hover:text-blue-600"
-                  >
-                    Forgot password?
-                  </a>
                 </div>
               </div>
 
@@ -183,10 +192,10 @@ const Login: React.FC = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                      Signing in...
+                      Registering...
                     </span>
                   ) : (
-                    "Sign in"
+                    "Register Now"
                   )}
                 </button>
               </div>
@@ -194,12 +203,12 @@ const Login: React.FC = () => {
           </div>
           <div className="bg-gray-50 px-8 py-4 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
+              You have already an account?{" "}
               <a
-                href="/register"
+                href="/login"
                 className="font-medium text-blue-500 hover:text-blue-600"
               >
-                Sign up
+                Sign in
               </a>
             </p>
           </div>
@@ -209,4 +218,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

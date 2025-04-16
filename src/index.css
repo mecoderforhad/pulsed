@@ -66,7 +66,7 @@ button:focus-visible {
 
 .react-phone-number-input__input {
   height: 48px !important;
-  border: 2ps solid red
+  border: 2ps solid red;
 }
 
 .react-phone-number-input__country {
@@ -75,4 +75,11 @@ button:focus-visible {
 
 .react-phone-number-input__country-select {
   padding-right: 12px;
+}
+
+.PhoneInputInput {
+  &:focus-visible {
+    border: none !important;
+    outline: 2px solid white;
+  }
 }
