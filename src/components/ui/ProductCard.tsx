@@ -48,7 +48,12 @@ export default function ProductCard({ product }) {
               <span className="text-gray-600 text-xs ml-1">({product.reviewCount})</span>
             </div> */}
 
-          <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-md shadow hover:shadow-md transition-all duration-300 flex items-center justify-center">
+          <button
+            style={{
+              background: "linear-gradient(135deg, #0f172a, #0e7490)",
+            }}
+            className="w-full text-white font-medium py-2 px-4 rounded-md shadow hover:shadow-md transition-all duration-300 flex items-center justify-center hover:brightness-110"
+          >
             <svg
               className="w-5 h-5 mr-2"
               fill="none"
