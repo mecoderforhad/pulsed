@@ -7,7 +7,7 @@ export const initialProducts = [
     description:
       "Premium sound with noise cancellation and 30-hour battery life.",
     image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://plus.unsplash.com/premium_photo-1661675485794-a43358baadbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 125,
   },
@@ -17,7 +17,7 @@ export const initialProducts = [
     price: 199.99,
     description: "Track fitness, receive notifications, and make payments.",
     image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1593003706788-793bac85ff36?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 5,
     reviewCount: 89,
   },
@@ -28,7 +28,7 @@ export const initialProducts = [
     description:
       "Compact yet powerful with 12-hour playtime, waterproof design.",
     image:
-      "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://plus.unsplash.com/premium_photo-1716440381828-36937fdabed7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 64,
   },
@@ -38,7 +38,7 @@ export const initialProducts = [
     price: 249.99,
     description: "Record stunning 4K videos with image stabilization.",
     image:
-      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1565300480288-deb407e6ae15?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 42,
   },

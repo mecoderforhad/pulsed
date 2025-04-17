@@ -22,10 +22,10 @@ const ProductGrid = () => {
         </div>
 
         {visibleProducts < products.length && (
-          <div className="mt-12 text-center">
+          <div className="mt-5 text-center">
             <button 
               onClick={loadMore}
-              className="bg-white border border-blue-500 text-blue-500 hover:bg-blue-50 font-medium py-2 px-6 rounded-md shadow-sm transition-all duration-300"
+              className="custom-gradient border border-blue-500 text-white hover:bg-blue-50 font-medium py-2 px-6 rounded-md shadow-sm transition-all duration-300"
             >
               Load More
             </button>

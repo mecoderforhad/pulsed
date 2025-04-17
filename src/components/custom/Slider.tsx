@@ -32,7 +32,7 @@ const images = [
 
 export default function Slider() {
   return (
-    <div className="mt-2">
+    <div>
       <Swiper
         navigation={true}
         modules={[Navigation, Autoplay]}
