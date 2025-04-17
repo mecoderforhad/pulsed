@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Dropdown, DropdownItem } from "flowbite-react";
-import { FiBell } from "react-icons/fi";
 
 const languages = ["English", "Spanish", "French", "German"];
 
@@ -17,13 +16,6 @@ export default function Header() {
           </DropdownItem>
         ))}
       </Dropdown>
-
-      {/* Notification Icon */}
-      <div className="relative">
-        <button className="p-2 rounded-full hover:bg-gray-100">
-          <FiBell className="h-6 w-6 text-gray-50" />
-        </button>
-      </div>
     </header>
   );
 }
