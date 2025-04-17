@@ -13,19 +13,19 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 const images = [
   {
-    url: "/public/assets/images/img1.jpg",
+    url: "https://static.vecteezy.com/system/resources/previews/007/301/684/non_2x/pet-shop-banner-design-template-cartoon-illustration-of-cats-dogs-house-food-vector.jpg",
     caption: "Electric Scooter.",
   },
   {
-    url: "/public/assets/images/img2.jpg",
+    url: "https://static.vecteezy.com/system/resources/previews/045/125/824/non_2x/various-breeds-of-dogs-peek-out-from-behind-a-wooden-fence-concept-for-pets-veterinary-clinic-or-nutrition-food-for-dogs-banner-with-space-for-text-photo.jpg",
     caption: "Scooter.",
   },
   {
-    url: "/public/assets/images/img3.jpg",
+    url: "https://c8.alamy.com/comp/2R0M39W/advertising-poster-pet-shop-sale-cute-dog-and-discount-offer-on-light-background-banner-design-2R0M39W.jpg",
     caption: "Scooter.",
   },
   {
-    url: "/public/assets/images/img5.jpg",
+    url: "https://t4.ftcdn.net/jpg/03/17/04/61/360_F_317046136_p8XC7kCPSyelhxe54mbXWJbUI6iMShM7.jpg",
     caption: "Scooter.",
   },
 ];
@@ -50,7 +50,7 @@ export default function Slider() {
               style={{
                 backgroundImage: `url(${image.url})`,
                 backgroundSize: "cover",
-                backgroundPosition: "bottom",
+                backgroundPosition: "center",
                 height: "500px",
                 width: "100%",
                 display: "flex",

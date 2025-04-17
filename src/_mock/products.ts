@@ -7,7 +7,7 @@ export const initialProducts = [
     description:
       "Premium sound with noise cancellation and 30-hour battery life.",
     image:
-      "https://plus.unsplash.com/premium_photo-1661675485794-a43358baadbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://i.imgur.com/w9E0g7K.jpeg?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 125,
   },
@@ -17,7 +17,7 @@ export const initialProducts = [
     price: 199.99,
     description: "Track fitness, receive notifications, and make payments.",
     image:
-      "https://images.unsplash.com/photo-1593003706788-793bac85ff36?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 5,
     reviewCount: 89,
   },
@@ -28,7 +28,7 @@ export const initialProducts = [
     description:
       "Compact yet powerful with 12-hour playtime, waterproof design.",
     image:
-      "https://plus.unsplash.com/premium_photo-1716440381828-36937fdabed7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 64,
   },
@@ -38,7 +38,7 @@ export const initialProducts = [
     price: 249.99,
     description: "Record stunning 4K videos with image stabilization.",
     image:
-      "https://images.unsplash.com/photo-1565300480288-deb407e6ae15?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 42,
   },
@@ -49,7 +49,7 @@ export const initialProducts = [
     originalPrice: 159.99,
     description: "True wireless earbuds with premium sound quality.",
     image:
-      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1532592333381-a141e3f197c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 78,
   },
@@ -59,7 +59,7 @@ export const initialProducts = [
     price: 79.99,
     description: "Monitor heart rate, steps, and sleep patterns.",
     image:
-      "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 3,
     reviewCount: 56,
   },
@@ -69,7 +69,7 @@ export const initialProducts = [
     price: 349.99,
     description: "10.5-inch display with stylus support and all-day battery.",
     image:
-      "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1453227588063-bb302b62f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 5,
     reviewCount: 112,
   },
@@ -79,7 +79,7 @@ export const initialProducts = [
     price: 49.99,
     description: "High-precision gaming mouse with customizable buttons.",
     image:
-      "https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     rating: 4,
     reviewCount: 34,
   },

@@ -4,10 +4,10 @@ import Slider from "../components/custom/Slider";
 
 export default function Dashboard() {
   return (
-    <>
+    <div className="custom-gradient">
       <Slider />
       {/* <VideoGallery /> */}
       <ProductGrid />
-    </>
+    </div>
   );
 }
