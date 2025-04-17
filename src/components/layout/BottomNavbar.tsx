@@ -2,12 +2,7 @@ import { Tooltip } from "flowbite-react";
 
 export default function BottomNavbar() {
   return (
-    <div
-      className="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 backdrop-blur-md border border-gray-200/50 rounded-full bottom-4 left-1/2 shadow-lg"
-      style={{
-        background: "linear-gradient(135deg, #0f172a, #0e7490)",
-      }}
-    >
+    <div className="fixed z-50 custom-gradient w-full h-16 max-w-lg -translate-x-1/2 backdrop-blur-md border border-gray-200/50 rounded-full bottom-4 left-1/2 shadow-lg">
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto mt-2">
         <Tooltip content="Home">
           <button
