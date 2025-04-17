@@ -4,6 +4,7 @@ import { useAuth } from "../provider/useAuth";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import Register from "../pages/Register";
+import Layout from "../components/layout/Layout";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -50,7 +51,11 @@ const Routes = () => {
     },
     {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: (
+        <Layout>
+          <Dashboard />
+        </Layout>
+      ),
     },
   ];
 
