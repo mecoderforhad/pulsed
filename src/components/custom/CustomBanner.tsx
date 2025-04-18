@@ -1,17 +1,21 @@
-import { Button } from 'flowbite-react';
-import { FaFacebook, FaGoogle, FaLine, FaTwitch } from 'react-icons/fa';
+import { Button } from "flowbite-react";
+import { FaFacebook, FaGoogle, FaLine, FaTwitch } from "react-icons/fa";
+import { useNavigate } from "react-router";
+import { ReactElement } from "react";
 
 export default function RegisterSection() {
+  const navigate = useNavigate();
+
   return (
     <section className="w-full px-4 py-12 md:py-20 bg-[#0f1f2a] text-white">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        {/* Left Column (Register box) */}
+        {/* Left Column */}
         <div className="text-center lg:text-left space-y-6">
           <h1 className="text-3xl md:text-5xl font-bold">
             World's Largest Online <br /> Casino and Sportsbook
           </h1>
-          <div className='lg:border lg:border-red-500'>
-            <Button color="blue" pill>
+          <div className="lg:block flex items-center justify-center">
+            <Button color="blue" pill onClick={() => navigate("/register")}>
               Register
             </Button>
           </div>
@@ -26,18 +30,18 @@ export default function RegisterSection() {
           </div>
         </div>
 
-        {/* Right Column (Cards) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Right Column */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
           <Card
             title="Casino"
             viewers="90,542"
-            image="https://mediumrare.imgix.net/explore-casino-en.png?w=640&h=421&fit=min&auto=format"
+            image="https://images.unsplash.com/photo-1453227588063-bb302b62f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             borderColor="border-blue-500"
           />
           <Card
             title="Sports"
             viewers="40,655"
-            image="https://mediumrare.imgix.net/explore-sports-en.png?w=640&h=421&fit=min&auto=format"
+            image="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             borderColor="border-green-500"
           />
         </div>
@@ -46,7 +50,11 @@ export default function RegisterSection() {
   );
 }
 
-function IconButton({ icon }) {
+type IconButtonProps = {
+  icon: ReactElement;
+};
+
+function IconButton({ icon }: IconButtonProps) {
   return (
     <button className="bg-[#1a2c38] p-3 rounded-lg hover:bg-[#243b4f] transition">
       {icon}
@@ -54,7 +62,14 @@ function IconButton({ icon }) {
   );
 }
 
-function Card({ title, viewers, image, borderColor }) {
+type CardProps = {
+  title: string;
+  viewers: string;
+  image: string;
+  borderColor: string;
+};
+
+function Card({ title, viewers, image, borderColor }: CardProps) {
   return (
     <div
       className={`bg-[#1a2c38] rounded-xl overflow-hidden shadow-md border-2 ${borderColor}`}

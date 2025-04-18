@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperType, NavigationOptions } from "swiper/types";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
@@ -8,20 +9,23 @@ import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { dogs } from "../../_mock/products";
 
 export default function EcommerceSlider() {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-  const swiperRef = useRef(null);
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const swiperRef = useRef<SwiperType>(null);
 
   useEffect(() => {
-    if (
-      swiperRef.current &&
-      swiperRef.current.params &&
-      swiperRef.current.params.navigation
-    ) {
-      swiperRef.current.params.navigation.prevEl = prevRef.current;
-      swiperRef.current.params.navigation.nextEl = nextRef.current;
-      swiperRef.current.navigation.init();
-      swiperRef.current.navigation.update();
+    const swiper = swiperRef.current;
+    const prevEl = prevRef.current;
+    const nextEl = nextRef.current;
+
+    if (swiper && prevEl && nextEl) {
+      // Ensure navigation is properly typed as NavigationOptions
+      const navigationParams = swiper.params.navigation as NavigationOptions;
+
+      navigationParams.prevEl = prevEl;
+      navigationParams.nextEl = nextEl;
+      swiper.navigation.init();
+      swiper.navigation.update();
     }
   }, []);
 
