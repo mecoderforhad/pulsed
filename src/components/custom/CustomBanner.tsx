@@ -1,52 +1,62 @@
 import { Button } from "flowbite-react";
 import { FaFacebook, FaGoogle, FaLine, FaTwitch } from "react-icons/fa";
-import { useNavigate } from "react-router";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
+import Registration from "./Registration";
 
 export default function RegisterSection() {
-  const navigate = useNavigate();
+  const [openRegistration, setOpenRegistration] = useState(false);
 
   return (
-    <section className="w-full px-4 py-12 md:py-20 bg-[#0f1f2a] text-white">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        {/* Left Column */}
-        <div className="text-center lg:text-left space-y-6">
-          <h1 className="text-3xl md:text-5xl font-bold">
-            World's Largest Online <br /> Casino and Sportsbook
-          </h1>
-          <div className="lg:block flex items-center justify-center">
-            <Button color="blue" pill onClick={() => navigate("/register")}>
-              Register
-            </Button>
-          </div>
-          <div className="space-y-2">
-            <p className="text-gray-300">Or sign up with</p>
-            <div className="flex justify-center lg:justify-start space-x-4">
-              <IconButton icon={<FaFacebook />} />
-              <IconButton icon={<FaGoogle />} />
-              <IconButton icon={<FaLine />} />
-              <IconButton icon={<FaTwitch />} />
+    <>
+      <section className="w-full px-4 py-12 md:py-20 bg-[#0f1f2a] text-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left Column */}
+          <div className="text-center lg:text-left space-y-6">
+            <h1 className="text-3xl md:text-5xl font-bold">
+              Find Your Furry 🐾<br /> Best Friend Today!
+            </h1>
+            <div className="lg:block flex items-center justify-center">
+              <Button
+                color="blue"
+                pill
+                onClick={() => setOpenRegistration(!openRegistration)}
+              >
+                Register
+              </Button>
+            </div>
+            <div className="space-y-2">
+              <p className="text-gray-300">Or sign up with</p>
+              <div className="flex justify-center lg:justify-start space-x-4">
+                <IconButton icon={<FaFacebook />} />
+                <IconButton icon={<FaGoogle />} />
+                <IconButton icon={<FaLine />} />
+                <IconButton icon={<FaTwitch />} />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Right Column */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
-          <Card
-            title="Casino"
-            viewers="90,542"
-            image="https://images.unsplash.com/photo-1453227588063-bb302b62f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            borderColor="border-blue-500"
-          />
-          <Card
-            title="Sports"
-            viewers="40,655"
-            image="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            borderColor="border-green-500"
-          />
+          {/* Right Column */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+            <Card
+              title="Price"
+              viewers="$200"
+              image="https://images.unsplash.com/photo-1453227588063-bb302b62f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+              borderColor="border-blue-500"
+            />
+            <Card
+              title="Price"
+              viewers="$180"
+              image="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+              borderColor="border-green-500"
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Registration
+        openModal={openRegistration}
+        setOpenModal={setOpenRegistration}
+      />
+    </>
   );
 }
 
