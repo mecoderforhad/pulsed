@@ -1,4 +1,9 @@
 import { Tooltip } from "flowbite-react";
+import { GiSittingDog } from "react-icons/gi";
+import { AiFillHome } from "react-icons/ai";
+import { FaPlusCircle } from "react-icons/fa";
+import { FaShareAlt } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa";
 
 export default function BottomNavbar() {
   return (
@@ -10,15 +15,51 @@ export default function BottomNavbar() {
               type="button"
               className="inline-flex flex-col items-center justify-center hover:bg-gray-50/10 group duration-200"
             >
-              <svg
-                className="w-6 h-6 text-gray-100 group-hover:text-blue-300 transition-colors duration-200"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-              </svg>
+              <AiFillHome className="text-white text-3xl" />
+              <span className="sr-only">Home</span>
+            </button>
+          </div>
+        </Tooltip>
+        <Tooltip content="List">
+          <div className="mx-3">
+            <button
+              type="button"
+              className="inline-flex flex-col items-center justify-center hover:bg-gray-50/10 group duration-200"
+            >
+              <GiSittingDog className="text-white text-3xl" />
+              <span className="sr-only">Home</span>
+            </button>
+          </div>
+        </Tooltip>
+        <Tooltip content="Add">
+          <div className="mx-3">
+            <button
+              type="button"
+              className="inline-flex flex-col items-center justify-center hover:bg-gray-50/10 group duration-200"
+            >
+              <FaPlusCircle className="text-white text-3xl" />
+              <span className="sr-only">Home</span>
+            </button>
+          </div>
+        </Tooltip>
+        <Tooltip content="Share">
+          <div className="mx-3">
+            <button
+              type="button"
+              className="inline-flex flex-col items-center justify-center hover:bg-gray-50/10 group duration-200"
+            >
+              <FaShareAlt className="text-white text-3xl" />
+              <span className="sr-only">Home</span>
+            </button>
+          </div>
+        </Tooltip>
+        <Tooltip content="Profile">
+          <div className="mx-3">
+            <button
+              type="button"
+              className="inline-flex flex-col items-center justify-center hover:bg-gray-50/10 group duration-200"
+            >
+              <FaUserAlt className="text-white text-3xl" />
               <span className="sr-only">Home</span>
             </button>
           </div>
