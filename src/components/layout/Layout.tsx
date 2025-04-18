@@ -1,12 +1,10 @@
-import BottomNavbar from "./BottomNavbar";
 import Header from "./Header";
 
 const Layout = ({ children }) => {
   return (
     <div>
       <header><Header /></header>
-      <main>{children}</main>
-      <BottomNavbar />
+      <main className="pt-15">{children}</main>
     </div>
   );
 };

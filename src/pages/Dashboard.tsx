@@ -1,13 +1,13 @@
-import ProductGrid from "../components/custom/products";
-import Slider from "../components/custom/Slider";
+import RegisterSection from "../components/custom/CustomBanner";
+import EcommerceSlider from "../components/custom/EcommerceSlider";
 // import VideoGallery from "../components/custom/VideoGallery";
 
 export default function Dashboard() {
   return (
     <div className="custom-gradient">
-      <Slider />
+      <RegisterSection />
       {/* <VideoGallery /> */}
-      <ProductGrid />
+      <EcommerceSlider />
     </div>
   );
 }
