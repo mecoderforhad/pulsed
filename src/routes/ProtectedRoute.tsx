@@ -1,15 +1,17 @@
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../provider/useAuth";
 
-export const ProtectedRoute = ({ children }) => {
+type ProtectedRouteProps = {
+  children: ReactNode;
+};
+
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { token } = useAuth();
 
-  // Check if the user is authenticated
   if (!token) {
-    // If not authenticated, redirect to the login page
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
-  // If authenticated, render the child routes
   return children;
 };

@@ -1,12 +1,15 @@
-import BottomNavbar from "./BottomNavbar";
+import { ReactNode } from "react";
 import Header from "./Header";
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div>
       <header><Header /></header>
-      <main>{children}</main>
-      <BottomNavbar />
+      <main className="pt-15">{children}</main>
     </div>
   );
 };

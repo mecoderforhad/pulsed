@@ -1,4 +1,21 @@
-export default function ProductCard({ product }) {
+import React from 'react';
+
+interface Product {
+  id: string | number;
+  image: string;
+  title: string;
+  description: string;
+  price: number;
+  originalPrice?: number;
+  rating?: number;
+  reviewCount?: number;
+}
+
+interface ProductCardProps {
+  product: Product;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       {/* Product Image */}
@@ -18,11 +35,11 @@ export default function ProductCard({ product }) {
           <div className="flex flex-col items-end">
             {product.originalPrice && (
               <span className="text-xs text-gray-400 line-through">
-                ${product.originalPrice}
+                ${product.originalPrice.toFixed(2)}
               </span>
             )}
             <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-2 py-0.5 rounded">
-              ${product.price}
+              ${product.price.toFixed(2)}
             </span>
           </div>
         </div>
@@ -34,11 +51,12 @@ export default function ProductCard({ product }) {
 
         {/* Rating and Button */}
         <div className="mt-auto">
-          {/* <div className="flex items-center mb-3">
+          {product.rating !== undefined && product.reviewCount !== undefined && (
+            <div className="flex items-center mb-3">
               {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
-                  className={`w-4 h-4 ${i < product.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                  className={`w-4 h-4 ${i < (product.rating || 0) ? 'text-yellow-400' : 'text-gray-300'}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -46,7 +64,8 @@ export default function ProductCard({ product }) {
                 </svg>
               ))}
               <span className="text-gray-600 text-xs ml-1">({product.reviewCount})</span>
-            </div> */}
+            </div>
+          )}
 
           <button className="w-full custom-gradient text-white font-medium py-2 px-4 rounded-md shadow hover:shadow-md transition-all duration-300 flex items-center justify-center hover:brightness-110">
             <svg
@@ -68,4 +87,6 @@ export default function ProductCard({ product }) {
       </div>
     </div>
   );
-}
+};
+
+export default ProductCard;

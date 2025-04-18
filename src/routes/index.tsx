@@ -1,9 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth } from "../provider/useAuth";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
-import Register from "../pages/Register";
+import Home from "../pages/home";
 import Layout from "../components/layout/Layout";
 
 const Routes = () => {
@@ -20,40 +18,22 @@ const Routes = () => {
   // Define routes accessible only to authenticated users
   const routesForAuthenticatedOnly = [
     {
-      path: "/",
-      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
-      children: [
-        {
-          path: "/dashboard",
-          element: <Dashboard />,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        // {
-        //   path: "/logout",
-        //   element: <Logout/>,
-        // },
-      ],
+      path: "/home",
+      element: (
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
+      ),
     },
   ];
 
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
     {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/dashboard",
+      path: "/home",
       element: (
         <Layout>
-          <Dashboard />
+          <Home />
         </Layout>
       ),
     },

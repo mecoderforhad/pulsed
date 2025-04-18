@@ -84,3 +84,34 @@ export const initialProducts = [
     reviewCount: 34,
   },
 ];
+
+export const dogs = [
+  {
+    id: 1,
+    title: "Smartwatch",
+    description: "Track your fitness and notifications",
+    price: "$149",
+    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 2,
+    title: "Bluetooth Speaker",
+    description: "Crystal clear sound with deep bass",
+    price: "$89",
+    image: "https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 3,
+    title: "4K Monitor",
+    description: "Ultra HD resolution for vivid visuals",
+    price: "$299",
+    image: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 4,
+    title: "Smartwatch",
+    description: "Track your fitness and notifications",
+    price: "$149",
+    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  },
+];
