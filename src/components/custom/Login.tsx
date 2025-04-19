@@ -13,7 +13,7 @@ const Login: React.FC<{
 }> = ({ openModal, setOpenModal }) => {
   const auth = useAuth();
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState<string>();
   const [phone, setPhone] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
   const [openOtp, setOpenOtp] = useState(false);
@@ -22,14 +22,14 @@ const Login: React.FC<{
     e.preventDefault();
     setIsLoading(true);
     try {
-      await auth.loginAction({ email: "", password });
+      await auth.requestOtp(phone, password);
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
       setIsLoading(false);
     }
-    setOpenModal(!openModal)
+    setOpenModal(!openModal);
     setOpenOtp(!openOtp);
   };
 
@@ -156,7 +156,12 @@ const Login: React.FC<{
           </div>
         </ModalBody>
       </Modal>
-      <OtpModal show={openOtp} onClose={() => setOpenOtp(!openOtp)} />
+      <OtpModal
+        show={openOtp}
+        onClose={() => setOpenOtp(!openOtp)}
+        phone={phone}
+        password={password}
+      />
     </>
   );
 };
