@@ -1,8 +1,20 @@
-import { useState, useRef, useEffect, KeyboardEvent } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
+import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import { Modal, ModalBody, ModalHeader } from "flowbite-react";
+import { useAuth } from "../../provider/useAuth";
 
-const OtpModal = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
+const OtpModal = ({
+  show,
+  onClose,
+  phone,
+  password,
+}: {
+  show: boolean;
+  onClose: () => void;
+  phone: string;
+  password: string;
+}) => {
+  const auth = useAuth();
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [isComplete, setIsComplete] = useState(false);
   const [resendTime, setResendTime] = useState(30);
@@ -14,7 +26,7 @@ const OtpModal = ({ show, onClose }: { show: boolean; onClose: () => void }) => 
   }, [show]);
 
   useEffect(() => {
-    const isFilled = otp.every(digit => digit !== '');
+    const isFilled = otp.every((digit) => digit !== "");
     setIsComplete(isFilled);
   }, [otp]);
 
@@ -28,7 +40,7 @@ const OtpModal = ({ show, onClose }: { show: boolean; onClose: () => void }) => 
   }, [resendTime, show]);
 
   const resetOtpForm = () => {
-    setOtp(Array(6).fill(''));
+    setOtp(Array(6).fill(""));
     setIsComplete(false);
     setResendTime(30);
   };
@@ -46,40 +58,46 @@ const OtpModal = ({ show, onClose }: { show: boolean; onClose: () => void }) => 
   };
 
   const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pasteData = e.clipboardData.getData('text/plain').slice(0, 6);
+    const pasteData = e.clipboardData.getData("text/plain").slice(0, 6);
     const newOtp = [...otp];
-    
-    pasteData.split('').forEach((char, i) => {
+
+    pasteData.split("").forEach((char, i) => {
       if (i < 6 && /^\d*$/.test(char)) {
         newOtp[i] = char;
       }
     });
 
     setOtp(newOtp);
-    
-    const lastFilledIndex = newOtp.findIndex(digit => digit === '');
-    const focusIndex = lastFilledIndex === -1 ? 5 : Math.min(lastFilledIndex - 1, 5);
+
+    const lastFilledIndex = newOtp.findIndex((digit) => digit === "");
+    const focusIndex =
+      lastFilledIndex === -1 ? 5 : Math.min(lastFilledIndex - 1, 5);
     inputRefs.current[focusIndex]?.focus();
   };
 
   const handleResend = () => {
     resetOtpForm();
     // Add your resend logic here
-    console.log('Resending OTP...');
+    console.log("Resending OTP...");
   };
 
-  const handleVerify = () => {
-    const otpCode = otp.join('');
-    console.log('Verifying OTP:', otpCode);
+  const handleVerify = async () => {
+    const otpCode = otp.join("");
+    try {
+      await auth.verifyOtp(phone, password, otpCode);
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      onClose();
+    }
     // Add your verification logic here
-    onClose();
     resetOtpForm();
   };
 
@@ -117,18 +135,18 @@ const OtpModal = ({ show, onClose }: { show: boolean; onClose: () => void }) => 
             disabled={!isComplete}
             className={`w-full mb-4 py-3 px-4 rounded-lg font-medium transition-colors ${
               isComplete
-                ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                : 'bg-gray-600 cursor-not-allowed text-gray-400'
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-gray-600 cursor-not-allowed text-gray-400"
             }`}
           >
             Verify OTP
           </button>
 
           <div className="text-sm">
-            <span className="text-gray-500">Didn't receive code?</span>{' '}
+            <span className="text-gray-500">Didn't receive code?</span>{" "}
             {resendTime > 0 ? (
               <span className="text-gray-400">
-                Resend in 00:{resendTime.toString().padStart(2, '0')}
+                Resend in 00:{resendTime.toString().padStart(2, "0")}
               </span>
             ) : (
               <button
