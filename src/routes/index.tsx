@@ -3,6 +3,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth } from "../provider/useAuth";
 import Home from "../pages/home";
 import Layout from "../components/layout/Layout";
+import Payment from "../pages/payment";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -34,6 +35,14 @@ const Routes = () => {
       element: (
         <Layout>
           <Home />
+        </Layout>
+      ),
+    },
+    {
+      path: "/payment",
+      element: (
+        <Layout>
+          <Payment />
         </Layout>
       ),
     },

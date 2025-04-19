@@ -7,11 +7,13 @@ import { Navigation } from "swiper/modules";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { dogs } from "../../_mock/products";
+import { useNavigate } from "react-router";
 
 export default function EcommerceSlider() {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperType>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -89,7 +91,10 @@ export default function EcommerceSlider() {
                   <span className="text-lg font-bold text-green-400">
                     {product.price}
                   </span>
-                  <button className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded">
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
+                    onClick={() => navigate("/payment")}
+                  >
                     Buy Now
                   </button>
                 </div>
