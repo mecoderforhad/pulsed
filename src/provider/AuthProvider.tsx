@@ -48,7 +48,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (data.token) {
         setUser(data.token);
         setToken(data.token.token);
-        localStorage.setItem("site", data.token.token);
+        localStorage.setItem("site", data);
         return;
       }
       throw new Error(data.message);

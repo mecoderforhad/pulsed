@@ -23,14 +23,13 @@ const Login: React.FC<{
     setIsLoading(true);
     try {
       await auth.requestOtp(phone, password);
-      navigate("/home");
+      setOpenModal(!openModal);
+      setOpenOtp(!openOtp);
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
       setIsLoading(false);
     }
-    setOpenModal(!openModal);
-    setOpenOtp(!openOtp);
   };
 
   useEffect(() => {
