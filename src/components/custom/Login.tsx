@@ -1,7 +1,6 @@
 // src/Login.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../provider/useAuth";
-import { useNavigate } from "react-router";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
@@ -12,7 +11,6 @@ const Login: React.FC<{
   setOpenModal: (v: boolean) => void;
 }> = ({ openModal, setOpenModal }) => {
   const auth = useAuth();
-  const navigate = useNavigate();
   const [password, setPassword] = useState<string>();
   const [phone, setPhone] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,12 +29,6 @@ const Login: React.FC<{
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (auth.token) {
-      navigate("/home");
-    }
-  }, [auth.token, navigate]);
 
   return (
     <>

@@ -22,7 +22,19 @@ const Routes = () => {
       path: "/home",
       element: (
         <ProtectedRoute>
-          <Home />
+          <Layout>
+            <Home />
+          </Layout>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/payment",
+      element: (
+        <ProtectedRoute>
+          <Layout>
+            <Payment />
+          </Layout>
         </ProtectedRoute>
       ),
     },
@@ -35,14 +47,6 @@ const Routes = () => {
       element: (
         <Layout>
           <Home />
-        </Layout>
-      ),
-    },
-    {
-      path: "/payment",
-      element: (
-        <Layout>
-          <Payment />
         </Layout>
       ),
     },

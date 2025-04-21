@@ -29,12 +29,6 @@ const Registration: React.FC<{
     }
   };
 
-  useEffect(() => {
-    if (auth.token) {
-      navigate("/home");
-    }
-  }, [auth.token, navigate]);
-
   return (
     <Modal show={openModal} onClose={() => setOpenModal(false)}>
       <ModalHeader className="bg-[#1a2c38] text-white">

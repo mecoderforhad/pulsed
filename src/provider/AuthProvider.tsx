@@ -8,10 +8,10 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string>(
-    localStorage.getItem("site") || ""
-  );
+  const siteData = JSON.parse(localStorage.getItem("site") || "{}");
+
+  const [user, setUser] = useState<User | null>(siteData?.user || null);
+  const [token, setToken] = useState<string>(siteData?.token || "");
 
   const requestOtp = async (phone: string, password: string) => {
     try {
@@ -40,17 +40,37 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: "Forhad Ahmed", phoneNumber: phone, otp: code, password, role: "ADMIN" }),
+          body: JSON.stringify({
+            name: "Forhad Ahmed",
+            phoneNumber: phone,
+            otp: code,
+            password,
+            role: "ADMIN",
+          }),
         }
       );
 
       const data = await res.json();
+
+      // If your backend returns the full user info + token in a flat structure:
       if (data.token) {
-        setUser(data.token);
-        setToken(data.token.token);
-        localStorage.setItem("site", data);
+        const userData: User = {
+          id: data.id,
+          name: data.name,
+          phoneNumber: data.phoneNumber,
+          // Add any other fields from your User interface
+        };
+
+        setUser(userData);
+        setToken(data.token);
+
+        localStorage.setItem(
+          "site",
+          JSON.stringify({ user: userData, token: data.token })
+        );
         return;
       }
+
       throw new Error(data.message);
     } catch (err) {
       console.error("OTP verification error:", err);

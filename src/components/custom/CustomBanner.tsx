@@ -2,9 +2,11 @@ import { Button } from "flowbite-react";
 import { FaFacebook, FaGoogle, FaLine, FaTwitch } from "react-icons/fa";
 import { ReactElement, useState } from "react";
 import Registration from "./Registration";
+import { useAuth } from "../../provider/useAuth";
 
 export default function RegisterSection() {
   const [openRegistration, setOpenRegistration] = useState(false);
+  const authUser = useAuth();
 
   return (
     <>
@@ -13,26 +15,33 @@ export default function RegisterSection() {
           {/* Left Column */}
           <div className="text-center lg:text-left space-y-6">
             <h1 className="text-3xl md:text-5xl font-bold">
-              Find Your Furry 🐾<br /> Best Friend Today!
+              Find Your Furry 🐾
+              <br /> Best Friend Today!
             </h1>
-            <div className="lg:block flex items-center justify-center">
-              <Button
-                color="blue"
-                pill
-                onClick={() => setOpenRegistration(!openRegistration)}
-              >
-                Register
-              </Button>
-            </div>
-            <div className="space-y-2">
-              <p className="text-gray-300">Or sign up with</p>
-              <div className="flex justify-center lg:justify-start space-x-4">
-                <IconButton icon={<FaFacebook />} />
-                <IconButton icon={<FaGoogle />} />
-                <IconButton icon={<FaLine />} />
-                <IconButton icon={<FaTwitch />} />
-              </div>
-            </div>
+            {authUser.token ? (
+              ""
+            ) : (
+              <>
+                <div className="lg:block flex items-center justify-center">
+                  <Button
+                    color="blue"
+                    pill
+                    onClick={() => setOpenRegistration(!openRegistration)}
+                  >
+                    Register
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-gray-300">Or sign up with</p>
+                  <div className="flex justify-center lg:justify-start space-x-4">
+                    <IconButton icon={<FaFacebook />} />
+                    <IconButton icon={<FaGoogle />} />
+                    <IconButton icon={<FaLine />} />
+                    <IconButton icon={<FaTwitch />} />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Right Column */}
