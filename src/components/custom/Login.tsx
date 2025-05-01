@@ -5,12 +5,14 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import OtpModal from "./OtpVerification";
+import Registration from "./Registration";
 
 const Login: React.FC<{
   openModal: boolean;
   setOpenModal: (v: boolean) => void;
 }> = ({ openModal, setOpenModal }) => {
   const auth = useAuth();
+  const [openRegistration, setOpenRegistration] = useState(false);
   const [password, setPassword] = useState<string>();
   const [phone, setPhone] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +54,7 @@ const Login: React.FC<{
                 />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+            <h2 className="text-3xl font-bold mb-2">Login</h2>
             <p className="text-gray-400 mb-6">Sign in to your account</p>
 
             <form onSubmit={handleLogin} className="w-full max-w-md space-y-6">
@@ -71,7 +73,7 @@ const Login: React.FC<{
                   placeholder="Enter phone number"
                   value={phone}
                   onChange={setPhone}
-                  className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-white"
+                  className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-slate-800"
                 />
               </div>
 
@@ -109,7 +111,7 @@ const Login: React.FC<{
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-3 mb-10 rounded-lg text-white font-medium transition duration-200 shadow-md ${
+                className={`w-full py-3 rounded-lg text-white font-medium transition duration-200 shadow-md ${
                   isLoading
                     ? "bg-blue-400 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
@@ -143,6 +145,20 @@ const Login: React.FC<{
                   "Sign in"
                 )}
               </button>
+              <div className="text-center">
+                <p className="text-sm text-gray-600">
+                  Don't have an account?{" "}
+                  <button
+                    className="font-medium text-blue-500 hover:text-blue-600"
+                    onClick={() => {
+                      setOpenRegistration(!openRegistration);
+                      setOpenModal(!openModal);
+                    }}
+                  >
+                    Sign up
+                  </button>
+                </p>
+              </div>
             </form>
           </div>
         </ModalBody>
@@ -152,6 +168,10 @@ const Login: React.FC<{
         onClose={() => setOpenOtp(!openOtp)}
         phone={phone}
         password={password}
+      />
+      <Registration
+        openModal={openRegistration}
+        setOpenModal={setOpenRegistration}
       />
     </>
   );

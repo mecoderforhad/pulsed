@@ -1,4 +1,3 @@
-// components/Navbar.jsx
 import {
   Avatar,
   Button,
@@ -13,27 +12,45 @@ import Registration from "../custom/Registration";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../provider/useAuth";
 
-export default function Navbar() {
+export default function AppNavbar() {
   const [openModal, setOpenModal] = useState(false);
   const [openRegistration, setOpenRegistration] = useState(false);
   const navigate = useNavigate();
-  const authUser = useAuth();
-
-  console.log("authUser-->", authUser);
+  const { token, user, logOut } = useAuth();
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#1a2c38] px-6 py-3 flex items-center justify-between shadow-md">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#1a2c38] px-6 py-4 shadow-md flex justify-between items-center">
         {/* Logo */}
         <div
-          className="text-white text-2xl font-bold italic tracking-wide cursor-pointer transform transition-transform duration-300 hover:scale-110"
-          onClick={() => navigate("/home")}
+          className="text-white text-2xl font-bold italic tracking-wide cursor-pointer transition-transform duration-300 hover:scale-110"
+          onClick={() => navigate("/")}
         >
           Puppy
         </div>
-        {/* Navigation Buttons */}
-        {authUser.token ? (
-          <div className="flex md:order-2">
+
+        {/* Right content */}
+        <div className="flex items-center gap-6">
+          {/* Admin Links */}
+          {token && user?.role === "ADMIN" && (
+            <>
+              <span
+                onClick={() => navigate("/add-product")}
+                className="text-white cursor-pointer hover:underline"
+              >
+                Add Product
+              </span>
+              <span
+                onClick={() => navigate("/product-list")}
+                className="text-white cursor-pointer hover:underline"
+              >
+                Product Table
+              </span>
+            </>
+          )}
+
+          {/* Auth Section */}
+          {token ? (
             <Dropdown
               arrowIcon={false}
               inline
@@ -46,38 +63,36 @@ export default function Navbar() {
               }
             >
               <DropdownHeader>
-                <span className="block text-sm">{authUser?.user?.name}</span>
+                <span className="block text-sm">{user?.name}</span>
                 <span className="block truncate text-sm font-medium">
-                  {authUser?.user?.phoneNumber}
+                  {user?.phoneNumber}
                 </span>
               </DropdownHeader>
-              <DropdownItem>Dashboard</DropdownItem>
-              <DropdownItem>Settings</DropdownItem>
-              <DropdownItem>Earnings</DropdownItem>
+              <DropdownItem onClick={() => navigate("/profile")}>Profile</DropdownItem>
               <DropdownDivider />
-              <DropdownItem onClick={() => authUser.logOut()}>
-                Sign out
-              </DropdownItem>
+              <DropdownItem onClick={logOut}>Sign out</DropdownItem>
             </Dropdown>
-          </div>
-        ) : (
-          <div className="flex items-center space-x-4">
-            <button
-              className="text-white font-medium hover:underline"
-              onClick={() => setOpenModal(!openModal)}
-            >
-              Login
-            </button>
-            <Button
-              color="blue"
-              pill
-              onClick={() => setOpenRegistration(!openRegistration)}
-            >
-              Register
-            </Button>
-          </div>
-        )}
-      </nav>
+          ) : (
+            <>
+              <button
+                className="text-white font-medium hover:underline"
+                onClick={() => setOpenModal(true)}
+              >
+                Login
+              </button>
+              <Button
+                color="blue"
+                pill
+                onClick={() => setOpenRegistration(true)}
+              >
+                Register
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Modals */}
       <Login openModal={openModal} setOpenModal={setOpenModal} />
       <Registration
         openModal={openRegistration}

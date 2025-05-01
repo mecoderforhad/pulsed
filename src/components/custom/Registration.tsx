@@ -12,6 +12,7 @@ const Registration: React.FC<{
 }> = ({ openModal, setOpenModal }) => {
   const auth = useAuth();
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +58,24 @@ const Registration: React.FC<{
 
           <form onSubmit={handleLogin} className="w-full max-w-md space-y-6">
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium mb-1">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="w-full mb-1 px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none text-white"
+                  placeholder="name"
+                />
+              </div>
+              <label htmlFor="phone" className="block text-sm font-medium mb-1 mt-2">
                 Phone Number
               </label>
               <PhoneInput
@@ -68,7 +86,7 @@ const Registration: React.FC<{
                 placeholder="Enter phone number"
                 value={phone}
                 onChange={setPhone}
-                className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-white"
+                className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-slate-800"
               />
             </div>
 

@@ -1,8 +1,9 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
-  phone: string;
+  phoneNumber: string;
   token: string;
+  role: string;
 }
 
 export interface AuthContextType {

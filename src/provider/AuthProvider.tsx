@@ -58,6 +58,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           id: data.id,
           name: data.name,
           phoneNumber: data.phoneNumber,
+          role: data.role,
+          token: data.token,
           // Add any other fields from your User interface
         };
 
@@ -82,6 +84,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
     setToken("");
     localStorage.removeItem("site");
+    
   };
 
   return (
