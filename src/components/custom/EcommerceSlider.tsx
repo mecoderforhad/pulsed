@@ -10,14 +10,49 @@ import { dogs } from "../../_mock/products";
 import { useNavigate } from "react-router";
 import Login from "./Login";
 import { useAuth } from "../../provider/useAuth";
+import Swal from "sweetalert2";
+import { truncateText } from "../../util/format";
+import { Tooltip } from "flowbite-react";
 
 export default function EcommerceSlider() {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperType>(null);
   const navigate = useNavigate();
   const authUser = useAuth();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/products`,
+          {
+            headers: {
+              Authorization: `Bearer ${authUser?.token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+
+        const data = await response.json();
+        setData(data);
+      } catch (err) {
+        setError(err.message);
+        Swal.fire("Error", err.message, "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [authUser?.token]);
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -34,6 +69,9 @@ export default function EcommerceSlider() {
       swiper.navigation.update();
     }
   }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -73,12 +111,12 @@ export default function EcommerceSlider() {
           }}
           className="productSwiper"
         >
-          {dogs.map((product) => (
+          {data?.map((product) => (
             <SwiperSlide key={product.id}>
               <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
                 <div className="w-full aspect-w-4 aspect-h-3">
                   <img
-                    src={product.image}
+                    src={`${product?.images[0]?.url}`}
                     alt={product.title}
                     className="w-full h-full object-cover"
                   />
@@ -89,7 +127,16 @@ export default function EcommerceSlider() {
                       {product.title}
                     </h3>
                     <p className="text-sm text-gray-300 mb-2">
-                      {product.description}
+                      <Tooltip
+                        content={product.description}
+                        placement="top"
+                        arrow={false}
+                        style="light"
+                      >
+                        <span className="cursor-pointer">
+                          {truncateText(product.description, 50)}
+                        </span>
+                      </Tooltip>
                     </p>
                   </div>
                   <div className="flex items-center justify-between mt-2">

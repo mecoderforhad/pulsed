@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 // import axios from "axios";
 
 type ProductFormData = {
@@ -19,11 +21,14 @@ export default function CreateProductForm() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ProductFormData>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  // Get token from localStorage
+  const siteInfo = localStorage.getItem("site");
+  const siteData = JSON.parse(siteInfo)
 
   const onSubmit = async (data: ProductFormData) => {
     setIsSubmitting(true);
@@ -40,47 +45,80 @@ export default function CreateProductForm() {
       formData.append("sku", data.sku);
       formData.append("categoryId", data.categoryId.toString());
       formData.append("status", data.status);
-      
+
       // Append each image file
       if (data.images && data.images.length > 0) {
         for (let i = 0; i < data.images.length; i++) {
           formData.append("images", data.images[i]);
         }
       }
+      if (!siteData?.token) {
+        throw new Error("No authentication token found");
+      }
 
-      console.log("formData", formData)
+      // Show loading alert
+      Swal.fire({
+        title: "Processing...",
+        text: "Please wait while we create your product.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
 
-    //   const response = await axios.post(
-    //     "http://localhost/products/create",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }
-    //   );
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/products/create`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${siteData?.token}`,
+          },
+          body: formData,
+        }
+      );
 
-      setSuccessMessage("Product created successfully!");
-      reset();
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to create product");
+      }
+
+      // Success message
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Product created successfully!",
+        confirmButtonText: "OK",
+      });
+
+      // Optional: Reset form or redirect
+      // resetForm();
+      navigate("/");
     } catch (error) {
-      setErrorMessage("Failed to create product. Please try again.");
-      console.error("Error creating product:", error);
-    } finally {
-      setIsSubmitting(false);
+      // Error message
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Something went wrong!",
+        confirmButtonText: "Try Again",
+      });
+      console.error("Error:", error);
     }
   };
 
   return (
     <div className="bg-[#0e1b2a] min-h-screen p-6">
       <div className="max-w-4xl mx-auto bg-[#1a2a3a] rounded-lg shadow-lg p-8  mt-5">
-        <h1 className="text-2xl font-bold text-white mb-6">Create New Product</h1>
-        
+        <h1 className="text-2xl font-bold text-white mb-6">
+          Create New Product
+        </h1>
+
         {successMessage && (
           <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
             {successMessage}
           </div>
         )}
-        
+
         {errorMessage && (
           <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             {errorMessage}
@@ -91,7 +129,10 @@ export default function CreateProductForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Title*
               </label>
               <input
@@ -102,13 +143,18 @@ export default function CreateProductForm() {
                 placeholder="Golden Retriever Puppy"
               />
               {errors.title && (
-                <p className="mt-1 text-sm text-red-400">{errors.title.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.title.message}
+                </p>
               )}
             </div>
 
             {/* SKU */}
             <div>
-              <label htmlFor="sku" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="sku"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 SKU*
               </label>
               <input
@@ -119,48 +165,68 @@ export default function CreateProductForm() {
                 placeholder="DOG-GR-001"
               />
               {errors.sku && (
-                <p className="mt-1 text-sm text-red-400">{errors.sku.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.sku.message}
+                </p>
               )}
             </div>
 
             {/* Description */}
             <div className="md:col-span-2">
-              <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Description*
               </label>
               <textarea
                 id="description"
                 rows={3}
-                {...register("description", { required: "Description is required" })}
+                {...register("description", {
+                  required: "Description is required",
+                })}
                 className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Adorable 8-week-old Golden Retriever puppy with excellent pedigree..."
               />
               {errors.description && (
-                <p className="mt-1 text-sm text-red-400">{errors.description.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.description.message}
+                </p>
               )}
             </div>
 
             {/* Price */}
             <div>
-              <label htmlFor="price" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="price"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Price*
               </label>
               <input
                 id="price"
                 type="number"
                 step="0.01"
-                {...register("price", { required: "Price is required", min: 0 })}
+                {...register("price", {
+                  required: "Price is required",
+                  min: 0,
+                })}
                 className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="899.99"
               />
               {errors.price && (
-                <p className="mt-1 text-sm text-red-400">{errors.price.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.price.message}
+                </p>
               )}
             </div>
 
             {/* Discount */}
             <div>
-              <label htmlFor="discount" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="discount"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Discount
               </label>
               <input
@@ -175,29 +241,42 @@ export default function CreateProductForm() {
 
             {/* Stock */}
             <div>
-              <label htmlFor="stock" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="stock"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Stock*
               </label>
               <input
                 id="stock"
                 type="number"
-                {...register("stock", { required: "Stock is required", min: 0 })}
+                {...register("stock", {
+                  required: "Stock is required",
+                  min: 0,
+                })}
                 className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="50"
               />
               {errors.stock && (
-                <p className="mt-1 text-sm text-red-400">{errors.stock.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.stock.message}
+                </p>
               )}
             </div>
 
             {/* Category */}
             <div>
-              <label htmlFor="categoryId" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="categoryId"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Category*
               </label>
               <select
                 id="categoryId"
-                {...register("categoryId", { required: "Category is required" })}
+                {...register("categoryId", {
+                  required: "Category is required",
+                })}
                 className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Select a category</option>
@@ -207,13 +286,18 @@ export default function CreateProductForm() {
                 <option value="4">Fish</option>
               </select>
               {errors.categoryId && (
-                <p className="mt-1 text-sm text-red-400">{errors.categoryId.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.categoryId.message}
+                </p>
               )}
             </div>
 
             {/* Status */}
             <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Status*
               </label>
               <select
@@ -227,13 +311,18 @@ export default function CreateProductForm() {
                 <option value="draft">Draft</option>
               </select>
               {errors.status && (
-                <p className="mt-1 text-sm text-red-400">{errors.status.message}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.status.message}
+                </p>
               )}
             </div>
 
             {/* Images */}
             <div className="md:col-span-2">
-              <label htmlFor="images" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="images"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Product Images
               </label>
               <div className="flex items-center justify-center w-full">

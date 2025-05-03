@@ -25,9 +25,7 @@ const Login: React.FC<{
   
     try {
       const response = await auth.requestOtp(phone, password);
-  
-      console.log("response->", response);
-  
+      
       // Only proceed if login is successful and response looks valid
       if (response?.success || response?.message === "OTP sent to phone number") {
         setOpenModal(!openModal);
