@@ -4,8 +4,9 @@ import { useAuth } from "../../provider/useAuth";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
-import OtpModal from "./OtpVerification";
 import Registration from "./Registration";
+import LoginOtpVerification from "./LoginOtpVerification";
+import Swal from "sweetalert2";
 
 const Login: React.FC<{
   openModal: boolean;
@@ -21,16 +22,36 @@ const Login: React.FC<{
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+  
     try {
-      await auth.requestOtp(phone, password);
-      setOpenModal(!openModal);
-      setOpenOtp(!openOtp);
+      const response = await auth.requestOtp(phone, password);
+  
+      console.log("response->", response);
+  
+      // Only proceed if login is successful and response looks valid
+      if (response?.success || response?.message === "OTP sent to phone number") {
+        setOpenModal(!openModal);
+        setOpenOtp(!openOtp);
+      } else {
+        // Handle unexpected success response structure
+        Swal.fire({
+          icon: "error",
+          title: "Unexpected Response",
+          text: response?.message || "An unknown error occurred.",
+        });
+      }
     } catch (error) {
-      console.error("Login failed:", error);
+      console.log("error->", error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: error.message || "Something went wrong while requesting OTP.",
+      });
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <>
@@ -73,7 +94,7 @@ const Login: React.FC<{
                   placeholder="Enter phone number"
                   value={phone}
                   onChange={setPhone}
-                  className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-slate-800"
+                  className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2"
                 />
               </div>
 
@@ -163,11 +184,10 @@ const Login: React.FC<{
           </div>
         </ModalBody>
       </Modal>
-      <OtpModal
+      <LoginOtpVerification
         show={openOtp}
         onClose={() => setOpenOtp(!openOtp)}
         phone={phone}
-        password={password}
       />
       <Registration
         openModal={openRegistration}

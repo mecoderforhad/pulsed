@@ -12,5 +12,5 @@ export interface AuthContextType {
   // loginAction: (data: { phone?: string; password: string }) => Promise<void>;
   logOut: () => void;
   requestOtp: (phone: string, password: string) => Promise<void>;
-  verifyOtp: (phone: string, password: string, otp: string) => Promise<void>;
+  verifyOtp: (phone: string, otp: string) => Promise<void>;
 }
