@@ -10,7 +10,7 @@ export default function RegisterSection() {
 
   return (
     <>
-      <section className="w-full px-4 py-12 md:py-20 bg-[#0f1f2a] text-white">
+      <section className="w-full px-4 py-8 md:py-16 bg-[#0f1f2a] text-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Column */}
           <div className="text-center lg:text-left space-y-6">

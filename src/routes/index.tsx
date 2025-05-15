@@ -4,9 +4,7 @@ import { useAuth } from "../provider/useAuth";
 import Home from "../pages/home";
 import Layout from "../components/layout/Layout";
 import Payment from "../pages/payment";
-import AddProduct from "../pages/AddProduct";
-import ProductsTable from "../pages/ProductsTable";
-import AdminProtectedRoute from "./AdminProtectedRoute";
+import UserProfile from "../pages/user/UserProfile";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -14,8 +12,8 @@ const Routes = () => {
   // Define public routes accessible to all users
   const routesForPublic = [
     {
-      path: "/settings",
-      element: <div>Service Page</div>,
+      path: "/home",
+      element: <Home />,
     },
   ];
 
@@ -41,28 +39,14 @@ const Routes = () => {
         </ProtectedRoute>
       ),
     },
-  ];
-
-  // Define routes that require ADMIN role
-  const routesForAdminOnly = [
     {
-      path: "/add-product",
+      path: "/profile",
       element: (
-        <AdminProtectedRoute>
+        <ProtectedRoute>
           <Layout>
-            <AddProduct />
+            <UserProfile />
           </Layout>
-        </AdminProtectedRoute>
-      ),
-    },
-    {
-      path: "/product-list",
-      element: (
-        <AdminProtectedRoute>
-          <Layout>
-            <ProductsTable />
-          </Layout>
-        </AdminProtectedRoute>
+        </ProtectedRoute>
       ),
     },
   ];
@@ -84,7 +68,6 @@ const Routes = () => {
     ...routesForPublic,
     ...(!token ? routesForNotAuthenticatedOnly : []),
     ...routesForAuthenticatedOnly,
-    ...routesForAdminOnly,
   ]);
 
   // Provide the router configuration using RouterProvider

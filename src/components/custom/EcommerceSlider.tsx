@@ -1,21 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperType, NavigationOptions } from "swiper/types";
 import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
-import { FaArrowAltCircleRight } from "react-icons/fa";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { dogs } from "../../_mock/products";
-import { useNavigate } from "react-router";
 import Login from "./Login";
-import { useAuth } from "../../provider/useAuth";
 import Swal from "sweetalert2";
-import { truncateText } from "../../util/format";
+import "swiper/css/navigation";
 import { Tooltip } from "flowbite-react";
+import { useNavigate } from "react-router";
+import { Navigation } from "swiper/modules";
+import { truncateText } from "../../util/format";
+import { useAuth } from "../../provider/useAuth";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useEffect, useRef, useState } from "react";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { Swiper as SwiperType, NavigationOptions } from "swiper/types";
 
 export default function EcommerceSlider() {
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -43,7 +42,7 @@ export default function EcommerceSlider() {
 
         const data = await response.json();
         setData(data);
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message);
         Swal.fire("Error", err.message, "error");
       } finally {
@@ -60,7 +59,6 @@ export default function EcommerceSlider() {
     const nextEl = nextRef.current;
 
     if (swiper && prevEl && nextEl) {
-      // Ensure navigation is properly typed as NavigationOptions
       const navigationParams = swiper.params.navigation as NavigationOptions;
 
       navigationParams.prevEl = prevEl;
@@ -111,7 +109,7 @@ export default function EcommerceSlider() {
           }}
           className="productSwiper"
         >
-          {data?.map((product) => (
+          {data?.map((product: any) => (
             <SwiperSlide key={product.id}>
               <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
                 <div className="w-full aspect-w-4 aspect-h-3">
@@ -141,7 +139,7 @@ export default function EcommerceSlider() {
                   </div>
                   <div className="flex items-center justify-between mt-2">
                     <span className="text-lg font-bold text-green-400">
-                      {product.price}
+                      ${product.price}
                     </span>
                     <button
                       className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
