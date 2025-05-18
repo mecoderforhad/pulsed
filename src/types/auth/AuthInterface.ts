@@ -4,6 +4,7 @@ export interface User {
   phoneNumber: string;
   token: string;
   role: string;
+  referId: string;
 }
 
 export interface AuthContextType {

@@ -20,7 +20,7 @@ export default function AppNavbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#1a2c38] px-6 shadow-md flex justify-between items-center">
+      <div className="fixed py-2 top-0 left-0 right-0 z-50 bg-[#1a2c38] px-6 shadow-md flex justify-between items-center">
         {/* Logo */}
         <div
           className="text-white text-2xl font-bold italic tracking-wide cursor-pointer transition-transform duration-300 hover:scale-110"
@@ -31,6 +31,7 @@ export default function AppNavbar() {
 
         {/* Right content */}
         <div className="flex items-center gap-6">
+          {token && <Button>Invite & Earn</Button>}
           {/* Auth Section */}
           {token ? (
             <Dropdown
@@ -50,7 +51,9 @@ export default function AppNavbar() {
                   {user?.phoneNumber}
                 </span>
               </DropdownHeader>
-              <DropdownItem onClick={() => navigate("/profile")}>Profile</DropdownItem>
+              <DropdownItem onClick={() => navigate("/profile")}>
+                Profile
+              </DropdownItem>
               <DropdownDivider />
               <DropdownItem onClick={logOut}>Sign out</DropdownItem>
             </Dropdown>

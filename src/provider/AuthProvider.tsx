@@ -66,6 +66,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           phoneNumber: data.phoneNumber,
           role: data.role,
           token: data.token,
+          referId: data.referId
           // Add other fields if needed
         };
   
