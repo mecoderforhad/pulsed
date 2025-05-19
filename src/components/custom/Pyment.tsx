@@ -1,24 +1,26 @@
 import { useState } from "react";
+// import { useAuth } from "../../provider/useAuth";
 
-type PaymentMethod = "USDT_TRC20" | "USDT_Polygon";
+type PaymentMethod = "USDT_ETH" | "USDT_Polygon";
 
 interface PaymentMethodOption {
   id: PaymentMethod;
   label: string;
 }
 
-const PaymentCard = () => {
-  const [activeTab, setActiveTab] = useState<PaymentMethod>("USDT_TRC20");
+const PaymentCard = ({ product }: any) => {
+  const [activeTab, setActiveTab] = useState<PaymentMethod>("USDT_ETH");
   const [copied, setCopied] = useState<boolean>(false);
+  // const { user } = useAuth();
 
   const paymentMethods: PaymentMethodOption[] = [
-    { id: "USDT_TRC20", label: "USDT (TRC20)" },
+    { id: "USDT_ETH", label: "USDT (ETH)" },
     { id: "USDT_Polygon", label: "USDT (Polygon)" },
   ];
 
   const walletAddresses: Record<PaymentMethod, string> = {
-    USDT_TRC20: "TNPdJ5hFr1J5eTDJ5hFr1J5eTDJ5hFr1J5",
-    USDT_Polygon: "0x5hFr1J5eTDJ5hFr1J5eTDJ5hFr1J5eTDJ5",
+    USDT_ETH: "0x04769440BF12dc3091Cdb42F10cf4792EA4F7208",
+    USDT_Polygon: "0x04769440BF12dc3091Cdb42F10cf4792EA4F7208",
   };
 
   const copyToClipboard = (text: string): void => {
@@ -70,14 +72,14 @@ const PaymentCard = () => {
       <div className="bg-[#22303c] p-4 rounded-lg mb-6">
         <p className="text-gray-400 text-sm mb-2">Payment Amount</p>
         <div className="flex justify-between items-center">
-          <span className="text-xl font-bold text-white">$100.00</span>
+          <span className="text-xl font-bold text-white">${product?.price}</span>
           <span className="text-gray-300 text-sm">Balance payment</span>
         </div>
       </div>
 
       <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 mb-6">
         <p className="text-yellow-400 text-sm text-center">
-          Please send exactly $100.00 USDT to the address above
+          Please send exactly ${product?.price} USDT to the address above
         </p>
       </div>
 

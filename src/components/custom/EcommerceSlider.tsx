@@ -69,7 +69,7 @@ export default function EcommerceSlider() {
   }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="text-gray-50">Error: {error}</div>;
 
   return (
     <>
@@ -145,7 +145,7 @@ export default function EcommerceSlider() {
                       className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
                       onClick={() =>
                         authUser?.token
-                          ? navigate("/payment")
+                          ? navigate("/payment",{ state: { product } })
                           : setOpenModal(!openModal)
                       }
                     >
