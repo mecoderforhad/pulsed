@@ -4,6 +4,8 @@ import { useAuth } from "../provider/useAuth";
 import Home from "../pages/home";
 import Layout from "../components/layout/Layout";
 import Payment from "../pages/payment";
+import UserProfile from "../pages/user/UserProfile";
+import Register from "../pages/auth/Register";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -11,18 +13,40 @@ const Routes = () => {
   // Define public routes accessible to all users
   const routesForPublic = [
     {
-      path: "/settings",
-      element: <div>Service Page</div>,
+      path: "/home",
+      element: <Home />,
     },
   ];
 
   // Define routes accessible only to authenticated users
   const routesForAuthenticatedOnly = [
     {
-      path: "/home",
+      path: "/",
       element: (
         <ProtectedRoute>
-          <Home />
+          <Layout>
+            <Home />
+          </Layout>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/payment",
+      element: (
+        <ProtectedRoute>
+          <Layout>
+            <Payment />
+          </Layout>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+        <ProtectedRoute>
+          <Layout>
+            <UserProfile />
+          </Layout>
         </ProtectedRoute>
       ),
     },
@@ -31,7 +55,7 @@ const Routes = () => {
   // Define routes accessible only to non-authenticated users
   const routesForNotAuthenticatedOnly = [
     {
-      path: "/home",
+      path: "/",
       element: (
         <Layout>
           <Home />
@@ -39,12 +63,8 @@ const Routes = () => {
       ),
     },
     {
-      path: "/payment",
-      element: (
-        <Layout>
-          <Payment />
-        </Layout>
-      ),
+      path: "/register",
+      element: <Register />,
     },
   ];
 

@@ -2,7 +2,7 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Poppins, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -82,10 +82,12 @@ button:focus-visible {
 
 .react-phone-number-input__country {
   padding-left: 12px;
+  color: black !important;
 }
 
 .react-phone-number-input__country-select {
   padding-right: 12px;
+  color: black !important;
 }
 
 .PhoneInputInput {
@@ -93,4 +95,8 @@ button:focus-visible {
     border: none !important;
     outline: 2px solid white;
   }
+}
+
+.PhoneInputCountrySelect option{
+  color: #0f172a !important;
 }

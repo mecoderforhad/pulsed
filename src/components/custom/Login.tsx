@@ -1,18 +1,19 @@
 // src/Login.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../provider/useAuth";
-import { useNavigate } from "react-router";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
-import OtpModal from "./OtpVerification";
+import Registration from "./Registration";
+import LoginOtpVerification from "./LoginOtpVerification";
+import Swal from "sweetalert2";
 
 const Login: React.FC<{
   openModal: boolean;
   setOpenModal: (v: boolean) => void;
 }> = ({ openModal, setOpenModal }) => {
   const auth = useAuth();
-  const navigate = useNavigate();
+  const [openRegistration, setOpenRegistration] = useState(false);
   const [password, setPassword] = useState<string>();
   const [phone, setPhone] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,23 +22,34 @@ const Login: React.FC<{
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+  
     try {
-      await auth.requestOtp(phone, password);
-      navigate("/home");
+      const response = await auth.requestOtp(phone, password);
+      
+      // Only proceed if login is successful and response looks valid
+      if (response?.success || response?.message === "OTP sent to phone number") {
+        setOpenModal(!openModal);
+        setOpenOtp(!openOtp);
+      } else {
+        // Handle unexpected success response structure
+        Swal.fire({
+          icon: "error",
+          title: "Unexpected Response",
+          text: response?.message || "An unknown error occurred.",
+        });
+      }
     } catch (error) {
-      console.error("Login failed:", error);
+      console.log("error->", error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: error.message || "Something went wrong while requesting OTP.",
+      });
     } finally {
       setIsLoading(false);
     }
-    setOpenModal(!openModal);
-    setOpenOtp(!openOtp);
   };
-
-  useEffect(() => {
-    if (auth.token) {
-      navigate("/home");
-    }
-  }, [auth.token, navigate]);
+  
 
   return (
     <>
@@ -61,7 +73,7 @@ const Login: React.FC<{
                 />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+            <h2 className="text-3xl font-bold mb-2">Login</h2>
             <p className="text-gray-400 mb-6">Sign in to your account</p>
 
             <form onSubmit={handleLogin} className="w-full max-w-md space-y-6">
@@ -80,7 +92,7 @@ const Login: React.FC<{
                   placeholder="Enter phone number"
                   value={phone}
                   onChange={setPhone}
-                  className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-white"
+                  className="w-full border border-gray-300 rounded-lg shadow-sm px-4 py-2"
                 />
               </div>
 
@@ -118,7 +130,7 @@ const Login: React.FC<{
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-3 mb-10 rounded-lg text-white font-medium transition duration-200 shadow-md ${
+                className={`w-full py-3 rounded-lg text-white font-medium transition duration-200 shadow-md ${
                   isLoading
                     ? "bg-blue-400 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-600"
@@ -152,15 +164,32 @@ const Login: React.FC<{
                   "Sign in"
                 )}
               </button>
+              <div className="text-center">
+                <p className="text-sm text-gray-600">
+                  Don't have an account?{" "}
+                  <button
+                    className="font-medium text-blue-500 hover:text-blue-600"
+                    onClick={() => {
+                      setOpenRegistration(!openRegistration);
+                      setOpenModal(!openModal);
+                    }}
+                  >
+                    Sign up
+                  </button>
+                </p>
+              </div>
             </form>
           </div>
         </ModalBody>
       </Modal>
-      <OtpModal
+      <LoginOtpVerification
         show={openOtp}
         onClose={() => setOpenOtp(!openOtp)}
         phone={phone}
-        password={password}
+      />
+      <Registration
+        openModal={openRegistration}
+        setOpenModal={setOpenRegistration}
       />
     </>
   );

@@ -1,7 +1,10 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
-  phone: string;
+  phoneNumber: string;
+  token: string;
+  role: string;
+  referId: string;
 }
 
 export interface AuthContextType {
@@ -10,5 +13,5 @@ export interface AuthContextType {
   // loginAction: (data: { phone?: string; password: string }) => Promise<void>;
   logOut: () => void;
   requestOtp: (phone: string, password: string) => Promise<void>;
-  verifyOtp: (phone: string, password: string, otp: string) => Promise<void>;
+  verifyOtp: (phone: string, otp: string) => Promise<void>;
 }

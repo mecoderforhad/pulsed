@@ -1,17 +1,16 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { useAuth } from "../../provider/useAuth";
+import Swal from "sweetalert2";
 
-const OtpModal = ({
+const LoginOtpVerification = ({
   show,
   onClose,
   phone,
-  password,
 }: {
   show: boolean;
   onClose: () => void;
   phone: string;
-  password: string;
 }) => {
   const auth = useAuth();
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
@@ -91,9 +90,21 @@ const OtpModal = ({
   const handleVerify = async () => {
     const otpCode = otp.join("");
     try {
-      await auth.verifyOtp(phone, password, otpCode);
+      await auth.verifyOtp(phone, otpCode);
+      Swal.fire({
+        icon: "success",
+        title: "Login Successfull.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.error("Login failed:", error);
+      Swal.fire({
+        title: "Error!",
+        text: `"Login failed:", ${error}`,
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
     } finally {
       onClose();
     }
@@ -163,4 +174,4 @@ const OtpModal = ({
   );
 };
 
-export default OtpModal;
+export default LoginOtpVerification;
