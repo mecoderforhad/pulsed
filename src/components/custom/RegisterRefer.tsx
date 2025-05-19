@@ -14,7 +14,7 @@ type FormData = {
   terms: boolean;
 };
 
-export default function RegisterRefer() {
+export default function RegisterRefer({ referralCode }: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [openOtp, setOpenOtp] = useState(false);
   const [formData, setFormData] = useState();
@@ -42,6 +42,7 @@ export default function RegisterRefer() {
             name: formData.name,
             phoneNumber: formData.phone,
             password: formData.password,
+            ref: referralCode || "",
           }),
         }
       );
@@ -71,7 +72,7 @@ export default function RegisterRefer() {
   });
 
   return (
-    <div className="py-20">
+    <div className="py-10">
       <div className="flex flex-col items-center">
         <div className="bg-blue-500 p-3 rounded-full mb-6">
           <svg
