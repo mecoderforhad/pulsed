@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import Layout from "../components/layout/Layout";
 import Payment from "../pages/payment";
 import UserProfile from "../pages/user/UserProfile";
+import Register from "../pages/auth/Register";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -60,6 +61,10 @@ const Routes = () => {
           <Home />
         </Layout>
       ),
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ];
 

@@ -11,9 +11,11 @@ import Login from "../custom/Login";
 import Registration from "../custom/Registration";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../provider/useAuth";
+import InviteFriendModal from "../../pages/user/InviteFriendModal";
 
 export default function AppNavbar() {
   const [openModal, setOpenModal] = useState(false);
+  const [openRefer, setRefer] = useState(false);
   const [openRegistration, setOpenRegistration] = useState(false);
   const navigate = useNavigate();
   const { token, user, logOut } = useAuth();
@@ -31,7 +33,9 @@ export default function AppNavbar() {
 
         {/* Right content */}
         <div className="flex items-center gap-6">
-          {token && <Button>Invite & Earn</Button>}
+          {token && (
+            <Button onClick={() => setRefer(!openRefer)}>Invite & Earn</Button>
+          )}
           {/* Auth Section */}
           {token ? (
             <Dropdown
@@ -82,6 +86,11 @@ export default function AppNavbar() {
       <Registration
         openModal={openRegistration}
         setOpenModal={setOpenRegistration}
+      />
+      <InviteFriendModal
+        user={user}
+        openRefer={openRefer}
+        setRefer={setRefer}
       />
     </>
   );

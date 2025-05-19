@@ -58,6 +58,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       );
   
       const data = await res.json();
+
+      console.log("data-->", data)
   
       if (data.token) {
         const userData: User = {
