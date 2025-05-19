@@ -4,31 +4,23 @@ import {
   HiOutlineCash,
   HiOutlineChartBar,
 } from "react-icons/hi";
+import { useAuth } from "../../provider/useAuth";
 
 const UserProfile = () => {
-  const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+1 234 567 890",
-    wallet: 250.75,
-    address: "123 Doggo Street, Puppytown, PA",
-    avatar: "https://i.pravatar.cc/100",
-    profitToday: 0.0,
-    cashableProfits: 0.0,
-    totalProfit: 0.0,
-  };
+  const { user } = useAuth();
+  console.log("User->", user);
 
   return (
     <div className="flex justify-center p-6 mt-10 text-white">
       <Card className="max-w-md w-full bg-gray-800 shadow-xl border-none">
         <div className="flex flex-col items-center text-center">
           <img
-            src={user.avatar}
+            src="/assets/avatar.jpg"
             alt="User Avatar"
-            className="w-24 h-24 rounded-full mb-4 border-4 border-blue-500"
+            className="w-24 h-24 rounded-full mb-4 border-4 border-blue-500 object-cover"
           />
-          <h2 className="text-xl font-semibold mb-1">{user.name}</h2>
-          <p className="text-sm text-gray-400">{user.phone}</p>
+          <h2 className="text-xl font-semibold mb-1">{user?.name}</h2>
+          <p className="text-sm text-gray-400">{user?.phoneNumber}</p>
         </div>
 
         {/* Profit Section with Icons */}
@@ -39,7 +31,7 @@ const UserProfile = () => {
               <span>Profit of the day</span>
             </div>
             <span className="font-semibold text-white">
-              ${user.profitToday.toFixed(3)}
+              {/* ${user.profitToday.toFixed(3)} */} 0
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -48,7 +40,7 @@ const UserProfile = () => {
               <span>Cashable profits</span>
             </div>
             <span className="font-semibold text-white">
-              ${user.cashableProfits.toFixed(3)}
+              {/* ${user.cashableProfits.toFixed(3)} */}0
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -57,7 +49,7 @@ const UserProfile = () => {
               <span>Total profit</span>
             </div>
             <span className="font-semibold text-white">
-              ${user.totalProfit.toFixed(3)}
+              {/* ${user.totalProfit.toFixed(3)} */}0
             </span>
           </div>
         </div>

@@ -28,7 +28,7 @@ const PaymentCard = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 rounded-xl shadow-lg bg-[#1a2c38] border border-[#2a3e4a]">
+    <div className="max-w-md mx-auto p-6 my-20 rounded-xl shadow-lg bg-[#1a2c38] border border-[#2a3e4a]">
       <h2 className="text-xl font-bold text-white mb-4 text-center">
         Complete Your Payment
       </h2>

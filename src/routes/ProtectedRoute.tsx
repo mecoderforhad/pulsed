@@ -10,7 +10,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { token } = useAuth();
 
   if (!token) {
-    return <Navigate to="/register" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;
