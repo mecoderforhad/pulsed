@@ -11,7 +11,7 @@ import Swal from "sweetalert2"
 const UserProfile = () => {
   const { user } = useAuth();
   const [userInfo, setUserInfo] = useState({});
-  console.log("User->", user);
+
   useEffect(() => {
       const fetchProducts = async () => {
         try {

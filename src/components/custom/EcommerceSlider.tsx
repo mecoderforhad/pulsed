@@ -16,6 +16,7 @@ import ActiveIndicator from "../ui/Indicator";
 
 export default function EcommerceSlider() {
   const [data, setData] = useState<any>([]);
+  const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -69,6 +70,38 @@ export default function EcommerceSlider() {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/users/${authUser?.user?.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authUser?.token}`,
+            },
+            method: "GET",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
+
+        const data = await response.json();
+        setUserInfo(data);
+      } catch (err: any) {
+        console.log(err.message);
+        Swal.fire("Error", err.message, "error");
+      }
+
+      // finally {
+      //   setLoading(false);
+      // }
+    };
+
+    fetchProducts();
+  }, [authUser?.token]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-gray-50">Error: {error}</div>;
 
@@ -118,6 +151,7 @@ export default function EcommerceSlider() {
       });
     }
   };
+  console.log("userInfo-->", userInfo)
 
   return (
     <>
@@ -160,7 +194,7 @@ export default function EcommerceSlider() {
           {data?.map((product: any) => (
             <SwiperSlide key={product.id}>
               <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
-                {/* <ActiveIndicator /> */}
+                {userInfo?.orders[0]?.items?.some(pod => pod?.productId === product.id) && <ActiveIndicator />}
                 <div className="w-full aspect-w-4 aspect-h-3">
                   <img
                     src={`${product?.images[0]?.url}`}
