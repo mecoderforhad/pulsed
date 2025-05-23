@@ -6,6 +6,7 @@ import Layout from "../components/layout/Layout";
 import Payment from "../pages/payment";
 import UserProfile from "../pages/user/UserProfile";
 import Register from "../pages/auth/Register";
+import ActiveProducts from "../pages/active-products/ActiveProducts";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -36,6 +37,16 @@ const Routes = () => {
         <ProtectedRoute>
           <Layout>
             <Payment />
+          </Layout>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/active-products",
+      element: (
+        <ProtectedRoute>
+          <Layout>
+            <ActiveProducts />
           </Layout>
         </ProtectedRoute>
       ),

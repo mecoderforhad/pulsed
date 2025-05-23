@@ -34,6 +34,9 @@ export default function AppNavbar() {
         {/* Right content */}
         <div className="flex items-center gap-6">
           {token && (
+            <Button onClick={()=> navigate("/active-products")}>Active Products</Button>
+          )}
+          {token && (
             <Button onClick={() => setRefer(!openRefer)}>Invite & Earn</Button>
           )}
           {/* Auth Section */}
