@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { Swiper as SwiperType, NavigationOptions } from "swiper/types";
+import ActiveIndicator from "../ui/Indicator";
 
 export default function EcommerceSlider() {
   const [data, setData] = useState<any>([]);
@@ -112,11 +113,12 @@ export default function EcommerceSlider() {
           {data?.map((product: any) => (
             <SwiperSlide key={product.id}>
               <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                <ActiveIndicator />
                 <div className="w-full aspect-w-4 aspect-h-3">
                   <img
                     src={`${product?.images[0]?.url}`}
                     alt={product.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-80 object-cover"
                   />
                 </div>
                 <div className="p-4 flex flex-col justify-between flex-grow">
@@ -145,7 +147,7 @@ export default function EcommerceSlider() {
                       className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
                       onClick={() =>
                         authUser?.token
-                          ? navigate("/payment",{ state: { product } })
+                          ? navigate("/payment", { state: { product } })
                           : setOpenModal(!openModal)
                       }
                     >
