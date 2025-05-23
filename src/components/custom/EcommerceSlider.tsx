@@ -72,6 +72,53 @@ export default function EcommerceSlider() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-gray-50">Error: {error}</div>;
 
+  const handleOrder = async (product: any) => {
+    const formData = {
+      userId: authUser?.user?.id,
+      txHash: "",
+      items: [{ productId: product?.id, quantity: 1 }],
+      totalAmount: product?.price,
+      paymentMethod: "manual",
+    };
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/orders/create`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authUser.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to create order");
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Order is created successfully!",
+        confirmButtonText: "OK",
+      });
+
+      // Optional: redirect or clear state
+      // navigate("/orders");
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Something went wrong!",
+        confirmButtonText: "Try Again",
+      });
+    }
+  };
+
   return (
     <>
       <div className="bg-[#0e1b2a] py-6 px-4 relative">
@@ -113,7 +160,7 @@ export default function EcommerceSlider() {
           {data?.map((product: any) => (
             <SwiperSlide key={product.id}>
               <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
-                <ActiveIndicator />
+                {/* <ActiveIndicator /> */}
                 <div className="w-full aspect-w-4 aspect-h-3">
                   <img
                     src={`${product?.images[0]?.url}`}
@@ -145,11 +192,14 @@ export default function EcommerceSlider() {
                     </span>
                     <button
                       className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
-                      onClick={() =>
-                        authUser?.token
-                          ? navigate("/payment", { state: { product } })
-                          : setOpenModal(!openModal)
-                      }
+                      onClick={() => {
+                        if (authUser?.token) {
+                          navigate("/payment", { state: { product } });
+                          handleOrder(product);
+                        } else {
+                          setOpenModal(!openModal);
+                        }
+                      }}
                     >
                       Buy Now
                     </button>
