@@ -34,6 +34,9 @@ export default function AppNavbar() {
         {/* Right content */}
         <div className="flex items-center gap-6">
           {token && (
+            <Button onClick={()=> navigate("/active-products")}>Active Products</Button>
+          )}
+          {token && (
             <Button onClick={() => setRefer(!openRefer)}>Invite & Earn</Button>
           )}
           {/* Auth Section */}
@@ -44,7 +47,7 @@ export default function AppNavbar() {
               label={
                 <Avatar
                   alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  img="/assets/avatar.jpg"
                   rounded
                 />
               }

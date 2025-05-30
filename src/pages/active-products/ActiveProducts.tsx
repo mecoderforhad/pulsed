@@ -12,9 +12,9 @@ import { useEffect, useRef, useState } from "react";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { Swiper as SwiperType, NavigationOptions } from "swiper/types";
-import ActiveIndicator from "../ui/Indicator";
+import ActiveIndicator from "../../components/ui/Indicator";
 
-export default function EcommerceSlider() {
+export default function ActiveProducts() {
   const [data, setData] = useState<any>([]);
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
@@ -151,13 +151,12 @@ export default function EcommerceSlider() {
       });
     }
   };
-  console.log("userInfo-->", userInfo);
 
   return (
     <>
       <div className="bg-[#0e1b2a] py-6 px-4 relative">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white text-2xl font-bold">Trending Products</h2>
+          <h2 className="text-white text-2xl font-bold">Active Products Page</h2>
           <div className="flex space-x-2">
             <button
               ref={prevRef}
@@ -191,63 +190,66 @@ export default function EcommerceSlider() {
           }}
           className="productSwiper"
         >
-          {data?.map((product: any) => (
-            <SwiperSlide key={product.id}>
-              <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
-                {userInfo?.orders?.some((order) =>
-                  order?.items?.some((pod) => pod?.productId === product.id)
-                ) && <ActiveIndicator />}
+          {data
+            ?.filter((product: any) =>
+              userInfo?.orders?.some((order) =>
+                order?.items?.some((item) => item?.productId === product.id)
+              )
+            )
+            .map((product: any) => (
+              <SwiperSlide key={product.id}>
+                <div className="bg-[#1e2a38] text-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                  <ActiveIndicator />
 
-                <div className="w-full aspect-w-4 aspect-h-3">
-                  <img
-                    src={`${product?.images[0]?.url}`}
-                    alt={product.title}
-                    className="w-full h-80 object-cover"
-                  />
-                </div>
-                <div className="p-4 flex flex-col justify-between flex-grow">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-1">
-                      {product.title}
-                    </h3>
-                    <p className="text-sm text-gray-300 mb-2">
-                      <Tooltip
-                        content={product.description}
-                        placement="top"
-                        arrow={false}
-                        style="light"
+                  <div className="w-full aspect-w-4 aspect-h-3">
+                    <img
+                      src={`${product?.images[0]?.url}`}
+                      alt={product.title}
+                      className="w-full h-80 object-cover"
+                    />
+                  </div>
+                  <div className="p-4 flex flex-col justify-between flex-grow">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1">
+                        {product.title}
+                      </h3>
+                      <p className="text-sm text-gray-300 mb-2">
+                        <Tooltip
+                          content={product.description}
+                          placement="top"
+                          arrow={false}
+                          style="light"
+                        >
+                          <span className="cursor-pointer">
+                            {truncateText(product.description, 50)}
+                          </span>
+                        </Tooltip>
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className="text-lg font-bold text-green-400">
+                        ${product.price}
+                      </span>
+                      <button
+                        className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
+                        onClick={() => {
+                          if (authUser?.token) {
+                            navigate("/payment", { state: { product } });
+                            handleOrder(product);
+                          } else {
+                            setOpenModal(!openModal);
+                          }
+                        }}
                       >
-                        <span className="cursor-pointer">
-                          {truncateText(product.description, 50)}
-                        </span>
-                      </Tooltip>
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-lg font-bold text-green-400">
-                      ${product.price}
-                    </span>
-                    <button
-                      className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded"
-                      onClick={() => {
-                        if (authUser?.token) {
-                          navigate("/payment", { state: { product } });
-                          handleOrder(product);
-                        } else {
-                          setOpenModal(!openModal);
-                        }
-                      }}
-                    >
-                      Buy Now
-                    </button>
+                        Buy Now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
-      <Login openModal={openModal} setOpenModal={setOpenModal} />
     </>
   );
 }
